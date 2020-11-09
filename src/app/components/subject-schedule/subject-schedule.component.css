@@ -1,0 +1,42 @@
+.example-card-false {
+  max-width: 400px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.example-button-row .mat-button-base {
+  margin: 8px 8px 8px 0;
+}
+.example-flex-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+.titulo{
+  margin-left: 2em;
+}
+
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  padding: 10px;
+}
+
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}

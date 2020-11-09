@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Añadir nuevo horario</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<div mat-dialog-content>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Dia</mat-label>
+        <mat-select name="dayOfWeek" formControlName="dayOfWeek">
+          <mat-option value="1">Lunes</mat-option>
+          <mat-option value="2">Martes</mat-option>
+          <mat-option value="3">Miercoles</mat-option>
+          <mat-option value="4">Jueves</mat-option>
+          <mat-option value="5">Viernes</mat-option>
+          <mat-option value="6">Sábado</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>today</mat-icon>
+        <mat-hint>Indica el día de la semana</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Hora de inicio</mat-label>
+        <input matInput type="time"  min="09:00" max="18:00" formControlName="start">
+        <mat-hint>Especifica la hora de inicio</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Hora de fin</mat-label>
+        <input matInput placeholder="16:20" type="text" formControlName="finish">
+        <mat-icon matSuffix>update</mat-icon>
+        <mat-hint>Especifica la hora de fin</mat-hint>
+      </mat-form-field>
+    </p>
+
+
+  </div>
+  <div mat-dialog-actions>
+    <input mat-button color="accent" type="submit" value="enviar" [disabled]="form.invalid">
+    <input mat-stroked-button type="button" (click)="onNoClick()" value="Cancelar">
+
+  </div>
+</form>
+
+
+<ng-template #loading>Cargando...</ng-template>

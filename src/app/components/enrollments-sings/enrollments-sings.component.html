@@ -1,0 +1,69 @@
+<h1>Fichajes de {{(subject$|async)?.name}}</h1>
+
+<p>Aquí se muestran todos los fichajes de los alumnos matriculados en la asignatura {{(subject$|async)?.name}}, tu ip es
+  {{ ipService.ip }} </p>
+<p>Hoy es {{now() | date: 'fullDate'}} día {{getDayOfYear()}} del año. Le toca quedarse en casa al grupo <span [style.color]="'red'">{{groupToSing | groupPipe}}</span>, el otro grupo tiene que asistir al centro
+</p>
+<br />
+
+Mostrar fichas realizados hace
+<mat-slider class="example-margin" [max]="20" [min]="0" [step]="1" [thumbLabel]="true"
+  [tickInterval]="getSliderTickInterval()" (change)="changeIntervalSlider($event)">
+</mat-slider>
+minutos
+
+
+<div class="button-row">
+  <button mat-raised-button [matBadge]="datos.length" (click)="sendDatosToGoogleSheet()"><mat-icon>cloud_upload</mat-icon> Envia los datos a Google Sheet</button>
+  <a mat-raised-button target="_blank" href="https://docs.google.com/spreadsheets/d/1vaHqhd5P37XflZzRm101eawERry50wrcW4cv4euDl3w/edit#gid=0"><mat-icon>open_in_browser</mat-icon> Abrir hoja Google Sheet</a>
+  <button mat-raised-button (click)="onCopyToClipboardOnlyFoulsColumn()"><mat-icon>content_paste</mat-icon> Copiar faltas al portapapeles </button>
+</div>
+
+<br/>
+
+<table>
+  <tr>
+    <th>Pos</th>
+    <th>Nombre</th>
+    <th>Fecha</th>
+    <th>Lugar</th>
+    <th>Fichaje</th>
+
+  </tr>
+
+  <tr *ngFor="let enrollment of enrollments$ | async; let en;">
+    <td>{{enrollment?.pos}} de {{ (enrollments$ | async)?.length}}</td>
+    <td>
+      <span *ngIf="enrollment.user | async as user">
+        {{ user.displayName}}
+        (GRUPO
+        <span [style.color]="getGroupColor(user.group)">
+          {{user.group | groupPipe}}
+        </span>)
+      </span>
+    </td>
+    <td>
+      <div *ngFor="let sing of enrollment.sings | async">
+        {{sing.createdAt.toDate() | date: 'HH:mm dd/MM/yyyy'}}
+      </div>
+    </td>
+    <td>
+      <span *ngIf="ipService.ip; else loadingIp">
+        <span *ngIf="enrollment.user | async as user">
+        <div *ngFor="let sing of enrollment.sings | async">
+          {{sing.ip === ipService.ip ? 'Está el centro':'Está su casa'}}
+          <span [style.color]="isCorrectSingLocalized(groupToSing,user.group,sing.ip === ipService.ip)?'green':'red'">
+            <mat-icon>{{isCorrectSingLocalized(groupToSing,user.group,sing.ip === ipService.ip)?'thumb_up':'thumb_down'}}</mat-icon>
+          </span>
+        </div>
+      </span>
+      </span>
+      <ng-template #loadingIp>Cargando ip...</ng-template>
+
+    </td>
+
+    <td *ngIf="enrollment.sings | async as sings" [style.color]="sings.length > 0?'blue':'red'">
+      {{sings.length | asistioPipe}}
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,22 @@
+<div *ngIf="enrollements$ | async; let enrollments; else loading">
+  <div *ngIf="enrollments.length !== 0">Está matriculado en las siguientes asignaturas:</div>
+
+  <ul>
+    <li *ngFor="let enrollment of enrollments">
+      <span *ngIf="(enrollment.subject | async) as subject; else loadingSubject">
+        {{ subject.name}}
+        <button mat-raised-button [disabled]="!subject.active"   #submitButton (click)="sing(submitButton, enrollment.id)">
+          <span *ngIf="subject.active">Fichar </span><mat-icon>fingerprint dialog</mat-icon>
+          <span *ngIf="!subject.active">El profe no deja fichar</span>
+        </button>
+
+        <a mat-button [routerLink]="['/user',idUser,'enrollment',enrollment.id,'sings']">Ver fichajes</a>
+        <a mat-button [routerLink]="['/user',idUser,'enrollment',enrollment.id,'justifications']">Ver justificaciones</a>
+      </span>
+      <ng-template #loadingSubject>Cargando matricula...</ng-template>
+
+    </li>
+  </ul>
+  <div *ngIf="enrollments!.length === 0">Por ahora no te has matriculado de nada</div>
+</div>
+<ng-template #loading>Cargando matriculas...</ng-template>

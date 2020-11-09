@@ -1,0 +1,35 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+
+  <span *ngIf="user$ | async as user; else loadingUser">
+
+    <mat-card class="example-card">
+      <mat-card-header>
+        <img mat-card-avatar class="example-header-image" alt="avatar" width="100" [src]="user?.photoURL" />
+        <mat-card-title>{{ user?.displayName }}</mat-card-title>
+        <mat-card-subtitle>{{user?.email}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div>Es profesor: {{ user?.isTeacher | booleanoPipe  }} </div>
+        <div>Es administrador: {{ user?.isAdmin | booleanoPipe }} </div>
+        <div>Tiene acceso: {{ user?.isActive | booleanoPipe }} </div>
+        <div>Último acceso: {{ user?.updatedAt?.toDate() | date: 'HH:mm dd/MM/yyyy' }} </div>
+        <div>Ip: {{ipService.ip}} </div>
+        <div>Grupo: {{ user?.group===0?'A':'B' }} </div>
+        <div> Hoy es el día {{ getDayOfYear() }} del año, día {{getParityOfDayYear()}}</div>
+        <div> {{user?.group === calcGroupToSing()?'Hoy deberías quedarte en casa':'Hoy deberías asistir al centro'}} </div>
+        <a mat-button [routerLink]="['/user',user.uid,'sings']" *ngIf="false">Ver todos los fichajes</a>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <app-user-enrollments-list [idUser]="user.uid"></app-user-enrollments-list>
+      </mat-card-actions>
+    </mat-card>
+<button>pulsame</button>
+
+  </span>
+  <ng-template #loadingUser>
+    cargando usuario...
+  </ng-template>
+
+</div>

@@ -1,0 +1,45 @@
+<p>Configuracion</p>
+<button (click)="edita()" value="pulsa2">prueba</button>
+
+
+
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Google API</mat-card-title>
+    <mat-card-subtitle>Subtitulo</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia nam, neque libero in optio magnam maiores
+      cupiditate ducimus voluptas eos rerum reprehenderit ut sunt dolor modi velit aperiam consequatur nostrum.
+    </p>
+    <p>
+      Url de la hoja de calculo de Google sheet <input type="text">
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="handleAuthClick($event)" id="authorize_button">Autorizacion en google sheet</button>
+    <button mat-button (click)="handleSignoutClick($event)" id="signout_button">Desautorizacion en google sheet</button>
+  </mat-card-actions>
+</mat-card>
+
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Grupos</mat-card-title>
+    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <span>
+      <p> Los días del año pares tiene que asistir a clase el grupo:
+      <mat-form-field appearance="fill">
+        <mat-label>Seleciona un grupo</mat-label>
+        <mat-select (selectionChange)="changeGroupToPairDays($event)" [value]="(configuration$ | async )?.pairDays">
+          <mat-option [value]="0">A</mat-option>
+          <mat-option [value]="1">B</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </span>
+  </mat-card-content>
+</mat-card>

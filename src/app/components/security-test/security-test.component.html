@@ -1,0 +1,37 @@
+<h1>Test de seguridad</h1>
+- Logueado como: {{(auth.user$ | async)?.email}}
+<br/>
+- otro usuario sin (Alumno) con quien comparar {{otherUserId}} kant003@gmail.com
+<br/>
+<br/>
+Logueate como profesor y lanza los test <button (click)="testAsTeacherLogin()">Test</button>
+<br/>
+Puede leer el propio user:  {{canReadOwnUser}}
+<br/>
+Puede leer un otro user: {{canReadOtherUser}}
+<br/>
+<br/>
+<br/>
+
+Logueate como usuario y lanza los test <button (click)="testAsUserLogin()">Test</button>
+<br/>
+Puede leer el propio user:  {{canReadOwnUser}}
+<br/>
+Puede leer un otro user: {{canReadOtherUser}}
+<br/>
+Puede leer sus propias matriculas :  {{canReadOwnEnrollment}}
+<br/>
+Puede leer matriculas de otros: {{canReadOtherEnrollment}}
+<br/>
+Puede firmar en una asignatura que está matriculado :  {{canSingOnOwnEnrollment}}
+<br/>
+Puede firmar en una asignatura que no le pertenece: {{canSingOnOtherEnrollment}}
+<br/>
+Puede modificar sus datos propios: {{canEditOwnUser}}
+<br/>
+No Puede modificar sus datos de otros usuarios: {{canEditOtherUser}}
+<br/>
+No Puede modificar el cambio isTeacher de sus datos propios: {{canEditOwnUserIsTeacher}}
+<br/>
+No Puede modificar el campo isTeacher de otros usuarios: {{canEditOtherUserIsTeacher}}
+

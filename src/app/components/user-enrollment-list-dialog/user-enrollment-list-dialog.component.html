@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Selecciona la matricula del alumno</h1>
+<div mat-dialog-content>
+  <div *ngIf="userEnrollements$ | async; let enrollments; else loading">
+    <div *ngIf="enrollments.length !== 0">Está matriculado en las siguientes asignaturas:</div>
+
+    <ul>
+      <li *ngFor="let enrollment of enrollments">
+        <span *ngIf="(enrollment.subject | async) as subject">
+          {{ subject.name}}
+       </span>
+        <a mat-button (click)="onClick()" [routerLink]="['/user',idAlumno,'enrollment',enrollment.id,'sings']">Ver fichajes</a>
+
+      </li>
+    </ul>
+    <div *ngIf="enrollments.length === 0">Por ahora no te has matriculado de nada</div>
+  </div>
+  <ng-template #loading>Cargando...</ng-template>
+
+</div>

@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Añadir nueva asignatura</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+
+    <mat-form-field appearance="legacy">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Sistemas Informaticos 2020-2021" type="text" formControlName="name">
+      <mat-icon matSuffix>mode_edit</mat-icon>
+      <mat-hint>Inserta el nombre de la asignatura</mat-hint>
+    </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions>
+    <input mat-button color="accent" type="submit" value="enviar" [disabled]="form.invalid">
+    <input mat-button mat-dialog-close type="button" (click)="onNoClick()" value="Cancelar">
+  </div>
+</form>
+

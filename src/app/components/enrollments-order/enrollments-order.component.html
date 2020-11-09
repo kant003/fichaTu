@@ -1,0 +1,18 @@
+<h1>Orden {{(subject$|async)?.name}}</h1>
+<p>Establece la posición de cada uno de los alumnos de la asignatura {{(subject$|async)?.name}}</p>, el primer alumno será el 1
+
+<div *ngIf="enrollments$ | async; let enrollments; else loading">
+
+  <div *ngFor="let enrollment of enrollments">
+
+    <input type="text" min="0" [max]="(enrollments$ | async)?.length" style="width: 2em;"
+      (change)="onChangePosition($event, enrollment.id)" [value]="enrollment.pos"> / {{ enrollments.length}}
+    <span *ngIf="enrollment.user | async; let user">
+      {{ user.displayName}} {{ user.email}} (Grupo: {{ user.group}})
+    </span>
+
+    <a mat-raised-button matTooltip="Permite" [routerLink]="['/enrollment',enrollment.id,'justifications']"> <mat-icon>schedule</mat-icon> </a>
+
+  </div>
+</div>
+<ng-template #loading>Cargando matriculas...</ng-template>

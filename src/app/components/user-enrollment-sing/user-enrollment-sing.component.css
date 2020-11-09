@@ -1,0 +1,17 @@
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+
+td {
+  text-align: center;
+}
+
+.vertical-header span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: left;
+  max-height: 150px;
+}

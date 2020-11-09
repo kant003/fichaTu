@@ -1,0 +1,78 @@
+<h1 class="titulo">Lista de justificaciones enviadas de la asignatura</h1>
+
+<div class="flex-container">
+  <button mat-button (click)="openDialog()">
+    Enviar nuevo justificante
+    <mat-icon mat-card-avatar aria-hidden="false" aria-label="add">add_circle_outline
+    </mat-icon>
+  </button>
+</div>
+
+<div class="table-container" *ngIf="justifications$ | async; let justifications; else loading">
+
+  <table mat-table [dataSource]="justifications" class="mat-elevation-z8">
+    <!--  Column -->
+    <ng-container matColumnDef="icono">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let justification">
+        <mat-icon>record_voice_over</mat-icon>
+      </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let justification"> {{justification.state}} </td>
+    </ng-container>
+
+     <!--  Column -->
+     <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef> Creación </th>
+      <td mat-cell *matCellDef="let justification"> {{justification.createdAt?.toDate() | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+
+    <!--  Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let justification"> {{justification.date?.toDate() | date: 'HH:mm dd/MM/yyyy'}} </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Descripción </th>
+      <td mat-cell *matCellDef="let justification"> {{justification.description}} </td>
+    </ng-container>
+
+     <!--  Column -->
+     <ng-container matColumnDef="photo">
+      <th mat-header-cell *matHeaderCellDef> Fichero </th>
+      <td mat-cell *matCellDef="let justification">
+        <button mat-button (click)="openDialogFile(justification.id)">
+          Ver
+          <mat-icon mat-card-avatar aria-hidden="false" aria-label="add">add_circle_outline
+          </mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Borrar </th>
+      <td mat-cell *matCellDef="let justification">
+        <button mat-mini-fab matTooltip="Elimina por completo la justificación" color="warn" aria-label="Borrar"
+          (click)="deleteItem(justification.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+
+    <!-- The table will render two header rows, one data row per data object, and two footer rows. -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="example-first-header-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<ng-template #loading>Cargando...</ng-template>

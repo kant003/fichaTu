@@ -1,0 +1,28 @@
+
+.flex-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.titulo {
+  margin-left: 2em;
+}
+
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  padding: 10px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.padding-izquierdo{
+  padding-right: 1em;
+
+}

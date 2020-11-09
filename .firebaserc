@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fichajerapidocebem": {
+      "hosting": {
+        "fichajeRapidoCebem": [
+          "fichajerapidocebem"
+        ]
+      }
+    }
+  }
+}

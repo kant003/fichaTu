@@ -1,0 +1,45 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()" class="example-icon"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>FichaTU</span>
+  <a mat-button [routerLink]="['/login']">Acceso</a>
+  <a mat-button [routerLink]="['/users']" *ngIf="user?.isTeacher">Gestión de alumnos</a>
+  <a mat-button [routerLink]="['/subjects']" *ngIf="user?.isTeacher">Gestión de asignaturas</a>
+
+  <span class="example-spacer"></span>
+  <span class="small-font" *ngIf="user; else showLogin">
+    {{ user.email }}
+  </span>
+  <ng-template #showLogin>
+    <span class="small-font">No estás registrado</span>
+  </ng-template>
+
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+
+      <a mat-list-item [routerLink]="['/login']">Acceso</a>
+      <a mat-list-item (click)="logout()">Logout</a>
+      <a mat-list-item [routerLink]="['/users']" *ngIf="user?.isTeacher">Gestión de alumnos</a>
+      <a mat-list-item [routerLink]="['/subjects']" *ngIf="user?.isTeacher">Gestión de asignaturas</a>
+      <a mat-list-item [routerLink]="['/configuration']" *ngIf="user?.isTeacher">Configuración</a>
+      <a mat-list-item [routerLink]="['/acercade']">Acerca de</a>
+      <a mat-list-item [routerLink]="['/prueba']" *ngIf="user?.isTeacher" >prueba</a>
+      <a mat-list-item [routerLink]="['/securityTest']" *ngIf="user?.isTeacher">Test seguridad</a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 88vh;">
+
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

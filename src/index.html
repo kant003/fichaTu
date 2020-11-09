@@ -1,13 +1,88 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>FichajeRapidoCebem</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Web para el auto-fichaje de alumnos.">
+  <meta name="keywords" content="fichaje, alumnos">
+  <meta name="author" content="Ángel González Martínez">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://apis.google.com/js/api.js"></script>
+
 </head>
+
 <body>
   <app-root></app-root>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+
+  <!--Add buttons to initiate auth sequence and sign out-->
+  <button id="authorize_button" style="display: none;">Authorize</button>
+  <button id="signout_button" style="display: none;">Sign Out</button>
+
+  <pre id="content" style="white-space: pre-wrap;"></pre>
+
+  <script type="text/javascript">
+    // Client ID and API key from the Developer Console
+    var CLIENT_ID = '1057326672749-63skcsqnt0u0csn2pniee5kqetlvdmjb.apps.googleusercontent.com';
+    var API_KEY = 'AIzaSyBHGZjJilPfBInvW1nBIRMCdOBHEhzR3n0';
+
+    // Array of API discovery doc URLs for APIs used by the quickstart
+    var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
+    //var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+    var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
+
+
+    function initClient() {
+      gapi.client.init({
+        apiKey: this.API_KEY,
+        clientId: this.CLIENT_ID,
+        discoveryDocs: this.DISCOVERY_DOCS,
+        scope: this.SCOPES
+      }).then(function () {
+        // Listen for sign-in state changes.
+        gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
+
+        // Handle the initial sign-in state.
+        // updateSigninStatus(this.gapi.auth2.getAuthInstance().isSignedIn.get());
+        //authorizeButton.onclick = handleAuthClick;
+        //signoutButton.onclick = handleSignoutClick;
+        console.log('inicializo gapi')
+      }, function (error) {
+        // appendPre(JSON.stringify(error, null, 2));
+        console.log(JSON.stringify(error, null, 2));
+      });
+    }
+
+    function handleClientLoad() {
+      gapi.load('client:auth2', this.initClient);
+    }
+
+  </script>
+
+  <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  </script>
+
+  <script>
+    var webObject = (function () {
+      return {
+        gapi: function () {
+          return gapi;
+        }
+      }
+    })(webObject || {})
+
+  </script>
 </body>
+
 </html>

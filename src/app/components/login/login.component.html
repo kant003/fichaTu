@@ -1,0 +1,11 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+
+  <span *ngIf="authService.user$ | async as user; else showLogin">
+    <button mat-button (click)="logout()">Logout</button>
+  </span>
+  <ng-template #showLogin>
+    <button mat-raised-button (click)="googleLogin()" color="primary">
+      <img class="logo" src="assets/images/googleLogo.png" width="20" />
+      Accede con Google</button>
+  </ng-template>
+</div>

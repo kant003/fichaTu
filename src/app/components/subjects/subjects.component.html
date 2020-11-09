@@ -1,0 +1,112 @@
+<h1 class="titulo">Lista de asignaturas</h1>
+
+<div class="flex-container">
+  <button mat-button (click)="openDialog()">
+    Añadir nueva asigntura
+    <mat-icon mat-card-avatar aria-hidden="false" aria-label="add">add_circle_outline
+    </mat-icon>
+  </button>
+</div>
+
+<div class="table-container" *ngIf="subjects$ | async; let subjects; else loading">
+
+  <mat-form-field>
+<mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Nombre de la asignatura" #input>
+  </mat-form-field>
+
+
+  <table mat-table [dataSource]="subjects" class="mat-elevation-z8">
+    <!--  Column -->
+    <ng-container matColumnDef="icono">
+      <th mat-header-cell *matHeaderCellDef>  </th>
+      <td mat-cell *matCellDef="let subject"> <mat-icon>perm_contact_calendar</mat-icon> </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let subject"> {{subject.name}} </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef> Creado </th>
+      <td mat-cell *matCellDef="let subject"> {{subject.createdAt?.toDate() | date: 'dd/MM/yyyy'}} </td>
+    </ng-container>
+
+
+    <!--  Column -->
+    <ng-container matColumnDef="permit">
+      <th mat-header-cell *matHeaderCellDef> Se permite fichar </th>
+      <td mat-cell *matCellDef="let subject">
+        <mat-slide-toggle matTooltip="Si está activado, el alumno podrá fichar en esta asignatura" [checked]="subject.active" (change)="activaFichaje($event, subject.id)"></mat-slide-toggle>
+      </td>
+    </ng-container>
+
+
+    <!--  Column -->
+    <ng-container matColumnDef="order">
+      <th mat-header-cell *matHeaderCellDef> Ordenar </th>
+      <td mat-cell *matCellDef="let subject">
+        <a mat-raised-button matTooltip="Permite cambiar el orden de los alumnos en esta asignatura, será el orden en el que se verá en la hoja de cálculo" [routerLink]="['/subject',subject.id,'order']"> <mat-icon>sort_by_alpha</mat-icon> </a>
+        <a mat-raised-button matTooltip="Ver matriculados" [routerLink]="['/subject',subject.id,'order']"> <mat-icon>sort_by_alpha</mat-icon> </a>
+      </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="sing">
+      <th mat-header-cell *matHeaderCellDef> Ver fichajes </th>
+      <td mat-cell *matCellDef="let subject">
+        <a mat-raised-button matTooltip="Permite ver los fichajes de los alumnos de esta asignatura" [routerLink]="['/subject',subject.id,'sings']"> <mat-icon>fingerprint</mat-icon> </a>
+      </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="schedules">
+      <th mat-header-cell *matHeaderCellDef> Horarios </th>
+      <td mat-cell *matCellDef="let subject">
+        <a mat-raised-button matTooltip="Permite gestionar los horarios de esta asignatura" [routerLink]="['/subject',subject.id,'schedules']"> <mat-icon>schedule</mat-icon> </a>
+      </td>
+    </ng-container>
+
+    <!--  Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Borrar </th>
+      <td mat-cell *matCellDef="let subject">
+        <button mat-mini-fab matTooltip="Elimina por completo la asignatura y todos sus datos" color="warn" aria-label="Borrar" (click)="deleteItem(subject.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Pagination column -->
+    <ng-container matColumnDef="disclaimer">
+      <td mat-footer-cell *matFooterCellDef colspan="2">
+        <button (click)="prevPage(subjects)"> prev </button>
+        <button (click)="nextPage(subjects)"> next </button>
+        <mat-select (selectionChange)="onChangePageSize($event)">
+          <mat-option default value="5">5</mat-option>
+          <mat-option value="10">10</mat-option>
+          <mat-option value="20">20</mat-option>
+      </mat-select>
+      </td>
+    </ng-container>
+
+    <!-- The table will render two header rows, one data row per data object, and two footer rows. -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="example-first-header-row">
+    </tr>
+
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No hay datos con el filtro "{{input.value}}"</td>
+    </tr>
+  </table>
+</div>
+
+<ng-template #loading>Cargando...</ng-template>

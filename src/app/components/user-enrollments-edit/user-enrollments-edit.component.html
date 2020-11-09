@@ -1,0 +1,36 @@
+
+<h1>Matriculaciones del alumno</h1>
+<p>Añade o elimina matriculaciones del alumno</p>
+<ng-container *ngIf="enrollments$ | async as enrollments">
+
+
+<mat-form-field class="example-chip-list">
+  <mat-chip-list #chipList aria-label="Enrollment selection">
+    <mat-chip *ngFor="let enrollment of enrollments" [selectable]="true"
+    [removable]="removable"
+    (removed)="remove(enrollment)">
+    <span *ngIf="(enrollment.subject | async) as subject">
+       {{ subject.name}}
+    </span>
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input
+      placeholder="Matriculas del alumno"
+      #enrollmentInput
+      [formControl]="enrollmentCtrl"
+      [matAutocomplete]="auto"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)">
+  </mat-chip-list>
+
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <ng-container  *ngFor="let subject of subjects$ | async" >
+      <mat-option *ngIf="!encuentra2(enrollments, subject.id)" [value]="subject">
+        {{ subject.name }}
+        </mat-option>
+    </ng-container>
+  </mat-autocomplete>
+</mat-form-field>
+
+</ng-container>
