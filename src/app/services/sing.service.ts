@@ -1,3 +1,4 @@
+import { Sing2 } from './../models/sing2';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -9,6 +10,7 @@ import * as moment from 'moment';
 import { User } from '../models/user';
 import { Subject } from '../models/subject';
 import { Schedule } from '../models/schedule';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,10 @@ export class SingService {
 
   sing(enrollmentId: string, sing: Sing): Promise<DocumentReference> {
     return this.afs.collection<Enrollment>('enrollments').doc(enrollmentId).collection('sings').add(sing);
+  }
+
+  sing2(sing2: Sing2): Promise<DocumentReference> {
+    return this.afs.collection<Sing>('sings').add(sing2);
   }
 
   //
@@ -37,17 +43,33 @@ export class SingService {
       );
   }
 
+  getSing2(idUser: string, date: moment.Moment): Observable<Sing2[]> {
+    const queryReference = this.afs.collection('users').doc(idUser).ref;
+
+    const start = date.toDate();
+    start.setHours(0);
+    start.setMinutes(0);
+    const finish = date.toDate();
+    finish.setHours(23);
+    finish.setMinutes(59);
+    const startDate = firebase.default.firestore.Timestamp.fromDate(start);
+    const finishDate = firebase.default.firestore.Timestamp.fromDate(finish);
+
+    const sing2$ = this.afs.collection<Sing2>('sings',
+      ref => ref.where('refUser', '==', queryReference).where('createdAt', '>', startDate).where('createdAt', '<', finishDate).orderBy('createdAt')
+    ).valueChanges();
+    return sing2$;
+  }
+
   getSingInfo(idUser: string, date: moment.Moment): Observable<InfoSchedule[]> {
     const queryReference = this.afs.collection('users').doc(idUser).ref;
 
-    const bb$ = this.afs.collection<Enrollment>('enrollments', ref => ref.where('refUser', '==', queryReference))
-      .valueChanges();
+    const enrrollments$ = this.afs.collection<Enrollment>('enrollments', ref => ref.where('refUser', '==', queryReference)).valueChanges();
 
-    return bb$.pipe(
+    return enrrollments$.pipe(
       map(enrollments => {
-
         const su: Subject = { name: 'angel' };
-        const sc: Schedule = { dayOfWeek: 1, start: '1:00', finish: '2:00' };
+        const sc: Schedule = { dayOfWeek: 1, startTime: this.toTimestamp(1, 0), finishTime: this.toTimestamp(2, 0) };
 
         const info1: InfoSchedule = { subject: su, schedule: sc };
         const info2: InfoSchedule = { subject: su, schedule: sc };
@@ -60,6 +82,19 @@ export class SingService {
     );
 
   }
+
+  toTimestamp(hours: number, minutes: number): firebase.default.firestore.Timestamp {
+    const startDate = new Date(
+      1970, // Year
+      1, // Month
+      1, // Date
+      hours,
+      minutes,
+    );
+    return firebase.default.firestore.Timestamp.fromDate(startDate);
+  }
+
+
 
   getEnrollmentPopulatedById(enrollmentId: string): Observable<Enrollment> {
     const bb$ = this.afs.collection<Enrollment[]>('enrollments').doc<Enrollment>(enrollmentId).valueChanges() as Observable<Enrollment>;
@@ -91,4 +126,6 @@ export class SingService {
 
     );
   }
+
+
 }

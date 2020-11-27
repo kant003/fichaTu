@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PruebaComponent implements OnInit {
   user$: Observable<User>;
-  constructor(userService: UserService,route: ActivatedRoute,) {
+  constructor(userService: UserService, route: ActivatedRoute) {
     const idAlumno = route.snapshot.paramMap.get('id') as string;
 
     this.user$ = userService.getUserById('bVM7mXaZc8gWqjsRtRxtpNSsgzJ2');

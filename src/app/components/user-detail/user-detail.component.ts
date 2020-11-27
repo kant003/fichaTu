@@ -3,7 +3,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Group } from 'src/app/models/group';
-import { Ip } from 'src/app/models/ip';
 import { User } from 'src/app/models/user';
 import { IpService } from 'src/app/services/ip.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,15 +12,13 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css']
+  styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
   user$: Observable<User>;
-  //ipClient$: Observable<Ip>;
   groupToSing?: Group;
   pairDays?: number;
 
-  //ip: string | null;
   constructor(
     public userService: UserService,
     public ipService: IpService,
@@ -31,7 +28,6 @@ export class UserDetailComponent implements OnInit {
     const uid = route.snapshot.paramMap.get('id') as string;
 
     this.user$ = userService.getUserById(uid);
-    //this.ipClient$ = ipService.getClientIp();
   }
 
   ngOnInit(): void {
@@ -41,10 +37,6 @@ export class UserDetailComponent implements OnInit {
         // 0 dias pares vienen el grupo A
         // 1 dias pares vienen el grupo B
       });
-    //console.log('la ip;'+this.ip)
-    // .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
-    //.catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any
-
   }
 
   calcGroupToSing(): number {

@@ -7,9 +7,10 @@ import { Group } from 'src/app/models/group';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { UserEnrollmentListDialogComponent } from '../user-enrollment-list-dialog/user-enrollment-list-dialog.component';
-import { catchError } from 'rxjs/operators';
+import { UserEnrollmentSelectDialogComponent } from '../user-enrollment-select-dialog/user-enrollment-select-dialog.component';
+import { catchError, debounceTime } from 'rxjs/operators';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -26,8 +27,8 @@ export class UserListComponent implements OnInit {
   public email = '';
 
   Group = Group;
-  public errorObject: Object|null = null;
 
+  filter = new FormControl('');
   constructor(
     private userService: UserService, public snackBarService: SnackBarService,
     public dialog: MatDialog
@@ -35,11 +36,14 @@ export class UserListComponent implements OnInit {
     this.users$ = userService.getUsersPaginatedFilterNameAndEmail();
     this.users$.pipe(
       catchError(err => {
-          this.errorObject = err;
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(err);
+        // this.errorObject = err;
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(err);
       })
     );
+
+    this.filter.valueChanges.pipe(debounceTime(400))
+      .subscribe(filter => this.applyFilter(filter));
   }
 
   ngOnInit(): void {
@@ -62,8 +66,13 @@ export class UserListComponent implements OnInit {
       this.userService.initPage();
     }
   }
-  applyFilter(event: KeyboardEvent): void {
+  /*applyFilter(event: KeyboardEvent): void {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.userService.initPage();
+    this.userService.nameFilter$.next(filterValue);
+  }*/
+
+  applyFilter(filterValue: string): void {
     this.userService.initPage();
     this.userService.nameFilter$.next(filterValue);
   }
@@ -93,7 +102,7 @@ export class UserListComponent implements OnInit {
 
   openDialog(idAlumno: string): void {
     console.log('open uid:', idAlumno);
-    this.dialog.open(UserEnrollmentListDialogComponent, {
+    this.dialog.open(UserEnrollmentSelectDialogComponent, {
       data: {
         idAlumno
       }

@@ -32,7 +32,7 @@ export class JustificationService {
     return this.afs.collection('enrollments').doc(idEnrollment)
     .collection<Justification>('justifications').doc<Justification>(newId).set(justification);
     // return this.afs.collection<Enrollment>('enrollments').doc(idEnrollment)
-    //.collection<Justification>('justifications').add(justification);
+    // .collection<Justification>('justifications').add(justification);
    }
 
   deleteJustification(idEnrollment: string, idJustification: string): Promise<void> {

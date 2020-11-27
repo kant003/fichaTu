@@ -1,11 +1,11 @@
 <h1 class="titulo">Gestion de alumnos</h1>
 
 
-<div class="table-container" *ngIf="users$ | async as users; else loadingOrError">
+<div class="table-container" *ngIf="users$ | async as users; else loading">
 
   <mat-form-field>
     <mat-label>Filtro</mat-label>
-    <input matInput [ngModel]="email" (keyup)="applyFilter($event)" placeholder="Buscar por email del alumno" #input>
+    <input matInput [formControl]="filter" [ngModel]="email" spellcheck="false" autocomplete="none" placeholder="Buscar por email del alumno" #input>
   </mat-form-field>
 
   <table mat-table [dataSource]="users" class="mat-elevation-z8">
@@ -102,18 +102,4 @@
   </table>
 </div>
 
-
-<ng-template #loadingOrError>
-  <ng-container *ngIf="errorObject; else loading">
-    <div class="col-12 text-center">
-      <div class="alert alert-danger">
-        {{ errorObject }}
-      </div>
-    </div>
-  </ng-container>
-  <ng-template #loading>
-    <div class="col-12 text-center">
-      Cargando ...
-    </div>
-  </ng-template>
-</ng-template>
+<ng-template #loading>Cargando...</ng-template>

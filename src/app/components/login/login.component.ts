@@ -12,8 +12,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  // public ipClient$: Observable<Ip>;
-  // userEnrollements$: Observable<Enrollment[]>;
 
   constructor(
     private userService: UserService,
@@ -46,11 +44,9 @@ export class LoginComponent implements OnInit {
         if (credential.user == null) {
           this.snackBarService.error('Fallo al realizar el login', 'Cerrar');
         }
-        this.userService.updateUserData(credential.user as firebase.User);
+        this.userService.updateUserData(credential.user as firebase.default.User);
         this.router.navigate(['/user', credential.user?.uid]);
 
-        // this.userLogin$ = this.userService.getUserById(credential.user.uid);
-        // this.userEnrollements$ = this.enrollmentService.getEnrollmentsByUserId(credential.user.uid);
       }).catch(response => {
         console.log(response.message);
         this.snackBarService.error('Fallo al realizar el login.' + response.message, 'Cerrar');

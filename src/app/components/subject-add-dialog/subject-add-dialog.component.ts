@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'src/app/models/subject';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { firestore } from 'firebase';
 import { SubjectService } from 'src/app/services/subject.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import * as firebase from 'firebase/app';
@@ -23,7 +22,7 @@ export class SubjectAddDialogComponent implements OnInit {
     private subjectService: SubjectService,
     private snackBarService: SnackBarService,
     public formBuilder: FormBuilder) {
-    // this.form = this.formBuilder.group({});
+
     }
 
   ngOnInit(): void {
@@ -34,7 +33,7 @@ export class SubjectAddDialogComponent implements OnInit {
     const subject: Subject = {
       name: this.form.value.name,
       active: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp() as firestore.Timestamp
+      createdAt: firebase.default.firestore.FieldValue.serverTimestamp() as firebase.default.firestore.Timestamp
     };
     this.subjectService.addSubject(subject).then(
       () => this.snackBarService.info('Asignatura guardada correctamente', 'Cerrar'),

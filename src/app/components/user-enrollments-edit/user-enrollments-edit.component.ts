@@ -42,7 +42,6 @@ export class UserEnrollmentsEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.enrollments$ = this.enrollmentService.getEnrollmentsByUserId(this.idAlumno);
 
   }
 
@@ -72,7 +71,7 @@ export class UserEnrollmentsEditComponent implements OnInit {
   }
 
   encuentra2(enrollments: Enrollment[] | null, subjectId: string | undefined): Enrollment | undefined{
-    //if(subjectId === undefined) {return null;}
+    // if(subjectId === undefined) {return null;}
     return enrollments?.find(e => e.refSubject.id === subjectId);
   }
 

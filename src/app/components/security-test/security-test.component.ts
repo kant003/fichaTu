@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/models/user';
-import { LocalizedString } from '@angular/compiler';
 import { EnrollmentService } from '../../services/enrollment.service';
 import * as firebase from 'firebase';
 import { Sing } from 'src/app/models/sing';
@@ -60,17 +57,17 @@ export class SecurityTestComponent implements OnInit {
       user => this.canReadOwnUser = 'pass',
       error => this.canReadOwnUser = 'no pass: ' + error
     );
-    //leemos datos de un usuario que no soy yo
+    // leemos datos de un usuario que no soy yo
     this.userService.getUserById(this.otherUserId).subscribe(
       user => this.canReadOtherUser = 'no pass',
       error => this.canReadOtherUser = 'pass: '
     );
-    //leemos matriculas que me pertenecen
+    // leemos matriculas que me pertenecen
     this.enrollmentService.getEnrollmentsByUserId(this.loguedUserId).subscribe(
       user => this.canReadOwnEnrollment = 'pass',
       error => this.canReadOwnEnrollment = 'no pass: ' + error
     );
-    //leemos matriculas que no me pertenecen
+    // leemos matriculas que no me pertenecen
     this.enrollmentService.getEnrollmentsByUserId(this.otherUserId).subscribe(
       user => this.canReadOtherEnrollment = 'no pass',
       error => this.canReadOtherEnrollment = 'pass: '
@@ -78,7 +75,8 @@ export class SecurityTestComponent implements OnInit {
 
     // firmamos en una matriculas que nos pertenece YukS57ddJrNN2SvQG7ei
     const sing: Sing = {
-      createdAt: firebase.firestore.FieldValue.serverTimestamp() as firebase.firestore.Timestamp, // TODO: Facilmente hackeable
+      createdAt: firebase.default.firestore
+        .FieldValue.serverTimestamp() as firebase.default.firestore.Timestamp, // TODO: Facilmente hackeable
       ip: '11.22.33.44'
     };
     this.singService.sing('YukS57ddJrNN2SvQG7ei', sing).then(
@@ -88,7 +86,8 @@ export class SecurityTestComponent implements OnInit {
 
     // firmamos en una matriculas que no nos pertenece PrB7pK8UbUii6hIEaAPD
     const sing2: Sing = {
-      createdAt: firebase.firestore.FieldValue.serverTimestamp() as firebase.firestore.Timestamp, // TODO: Facilmente hackeable
+      createdAt: firebase.default.firestore
+        .FieldValue.serverTimestamp() as firebase.default.firestore.Timestamp, // TODO: Facilmente hackeable
       ip: '11.22.33.44'
     };
     this.singService.sing('PrB7pK8UbUii6hIEaAPD', sing2).then(
@@ -96,30 +95,26 @@ export class SecurityTestComponent implements OnInit {
       error => this.canSingOnOtherEnrollment = 'pass: '
     );
 
-    //editamos nuestros propios datos (active)
+    // editamos nuestros propios datos (active)
     this.userService.updateUserActive(this.loguedUserId, true).then(
       () => this.canEditOwnUser = 'pass',
       error => this.canEditOwnUser = 'no pass: ' + error
     );
-    //editamos los datos de otros usaurios
+    // editamos los datos de otros usaurios
     this.userService.updateUserActive(this.otherUserId, true).then(
       () => this.canEditOtherUser = 'no pass:',
       error => this.canEditOtherUser = 'pass:'
     );
 
-    //editamos nuestros el campo isTeacher de  sus propios datos (active)
+    // editamos nuestros el campo isTeacher de  sus propios datos (active)
     this.userService.updateUserIsTeacher(this.loguedUserId, true).then(
       () => this.canEditOwnUserIsTeacher = 'no pass',
       error => this.canEditOwnUserIsTeacher = 'pass: '
     );
-    //editamos el campo isTeacher de los datos de otros usaurios
+    // editamos el campo isTeacher de los datos de otros usaurios
     this.userService.updateUserIsTeacher(this.otherUserId, true).then(
       () => this.canEditOtherUserIsTeacher = 'no pass:',
       error => this.canEditOtherUserIsTeacher = 'pass:'
     );
   }
-
 }
-//http://localhost:4200/user/
-// vvwoFB6w3CfqEjlBWsVMVa7B2uT2/
-//enrollment/YukS57ddJrNN2SvQG7ei/sings

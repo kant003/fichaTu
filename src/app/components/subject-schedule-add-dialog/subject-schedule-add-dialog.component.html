@@ -20,14 +20,14 @@
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Hora de inicio</mat-label>
-        <input matInput type="time"  min="09:00" max="18:00" formControlName="start">
+        <input matInput type="time"  min="08:00" max="23:99" formControlName="startTime">
         <mat-hint>Especifica la hora de inicio</mat-hint>
       </mat-form-field>
     </p>
     <p>
       <mat-form-field appearance="legacy">
         <mat-label>Hora de fin</mat-label>
-        <input matInput placeholder="16:20" type="text" formControlName="finish">
+        <input matInput placeholder="16:20" type="text" formControlName="finishTime">
         <mat-icon matSuffix>update</mat-icon>
         <mat-hint>Especifica la hora de fin</mat-hint>
       </mat-form-field>

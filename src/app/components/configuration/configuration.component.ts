@@ -32,7 +32,7 @@ export class ConfigurationComponent implements OnInit {
 
   changeGroupToPairDays(event: MatSelectChange): void {
     console.log(event.value)
-    //const group = (value === '0') ? Group.A : Group.B;
+    // const group = (value === '0') ? Group.A : Group.B;
     this.configurationService.setGroupToPairDays(event.value).then(
       () => this.snackBarService.info(`Grupo  cambiado correctamente`, 'Cerrar'),
       error => this.snackBarService.error('Error:' + error, 'Cerrar')
@@ -71,42 +71,42 @@ export class ConfigurationComponent implements OnInit {
       spreadsheetId: '1vaHqhd5P37XflZzRm101eawERry50wrcW4cv4euDl3w',
       range: 'Hoja 1!A1:B4',
     }).then((response: any) => {
-      var range = response.result;
+      const range = response.result;
       if (range.values.length > 0) {
-        //appendPre('Name, Major:');
-        for (let i = 0; i < range.values.length; i++) {
-          var row = range.values[i];
+        // appendPre('Name, Major:');
+        for(let i = 0; i < range.values.length; i++) {
+          const row = range.values[i];
           // Print columns A and E, which correspond to indices 0 and 4.
-          //appendPre(row[0] + ', ' + row[4]);
+          // appendPre(row[0] + ', ' + row[4]);
         }
       } else {
-        //appendPre('No data found.');
+        // appendPre('No data found.');
       }
     }, (response: any) => {
-      //appendPre('Error: ' + response.result.error.message);
+      // appendPre('Error: ' + response.result.error.message);
     });
   }
 
 
   edita() {
 
-    var values = [
+    const values = [
       [
         "Hola", "adios"
       ],
       // Additional rows ...
     ];
-    var body = {
+    const body = {
       values: values
     };
-    var valueInputOption =
+    const valueInputOption =
       this.gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: '1vaHqhd5P37XflZzRm101eawERry50wrcW4cv4euDl3w',
         range: 'Hoja 1!A1:B1',
         valueInputOption: "USER_ENTERED",
         resource: body
       }).then((response: any) => {
-        var result = response.result;
+        const result = response.result;
         console.log(`${result.updatedCells} cells updated.`);
       });
   }

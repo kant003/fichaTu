@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
-import 'firebase/firestore';
+//import 'firebase/firestore';
 import { AngularFirestore, AngularFirestoreDocument, QueryFn, DocumentReference } from '@angular/fire/firestore';
 
-import { firestore } from 'firebase';
+//import { firestore } from 'firebase';
 
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Operation, Paginated } from './paginated-service';
-import { noUndefined } from '@angular/compiler/src/util';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class UserService extends Paginated<User> {
     return combineLatest([this.nameFilter$, this.emailFilter$]).pipe(
       switchMap(([name, email]) =>
         this.afs.collection<User>('users', ref => {
-          let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+          let query: firebase.default.firestore.CollectionReference | firebase.default.firestore.Query = ref;
 
           // if (name) { query = query.orderBy('name')./*where('displayName', '==', name).*/startAt(name).endAt(name + '\uf8ff') };
           if (name) { query = query.orderBy('displayName').startAt(name).endAt(name + '\uf8ff'); }
@@ -71,7 +71,7 @@ export class UserService extends Paginated<User> {
     );
   }
 
-  updateUserData(user: firebase.User): void {
+  updateUserData(user: firebase.default.User): void {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
     userRef.get().subscribe(snap => {
       if (snap.exists) { // si el documento existe
@@ -81,11 +81,12 @@ export class UserService extends Paginated<User> {
           displayName: user.displayName as string,
           // isAdmin: null, // si existe nunca lo pondremos a true, tendrá que enviarse null (rules firebase)
           photoURL: user.photoURL as string,
-          updatedAt: this.timestamp as firestore.Timestamp,
-          createdAt: this.timestamp as firestore.Timestamp
+          updatedAt: this.timestamp as firebase.default.firestore.Timestamp,
+          createdAt: this.timestamp as firebase.default.firestore.Timestamp
         };
 
         return userRef.set(data, { merge: true });
+
       } else { // si el documento no existe
         const data: User = {
           uid: user.uid,
@@ -96,8 +97,8 @@ export class UserService extends Paginated<User> {
           isActive: true,
           isAdmin: false, // si no existe le documento es obligatorio que no sea administrador para poder crearlo (rules firebase)
           isTeacher: false, // si no existe le documento es obligatorio que no sea profesor para poder crearlo (rules firebase)
-          updatedAt: this.timestamp as firestore.Timestamp,
-          createdAt: this.timestamp as firestore.Timestamp
+          updatedAt: this.timestamp as firebase.default.firestore.Timestamp,
+          createdAt: this.timestamp as firebase.default.firestore.Timestamp
         };
 
         return userRef.set(data, { merge: true });
@@ -120,7 +121,7 @@ export class UserService extends Paginated<User> {
     return this.afs.collection('users').doc(uid).update({ isTeacher });
   }
 
-  get timestamp(): firestore.Timestamp {
-    return firebase.firestore.FieldValue.serverTimestamp() as firestore.Timestamp;
+  get timestamp(): firebase.default.firestore.Timestamp {
+    return firebase.default.firestore.FieldValue.serverTimestamp() as firebase.default.firestore.Timestamp;
   }
 }

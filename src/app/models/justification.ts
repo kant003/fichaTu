@@ -1,9 +1,8 @@
-import { firestore } from 'firebase';
 
 export interface Justification {
   id?: string;
-  createdAt: firestore.Timestamp;
-  date: firestore.Timestamp;
+  createdAt: firebase.default.firestore.Timestamp;
+  date: firebase.default.firestore.Timestamp;
   description: string;
   state: string;
 }

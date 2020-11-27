@@ -1,0 +1,20 @@
+<h1>Calificaciones de los alumnos</h1>
+<p>Calificar a todos los alumnos de la asignatura</p>
+
+
+<button (click)="addColumnCalifications()">Añadir columna calificaciones</button>
+<button (click)="removeColumnCalifications()">Añadir columna calificaciones</button>
+
+<div *ngIf="enrollments$ | async; let enrollments; else loading">
+
+  <div *ngFor="let enrollment of enrollments">
+
+    <span *ngIf="enrollment.user | async; let user">
+      {{ user.displayName}} {{ user.email}} (Grupo: {{ user.group}})
+    </span>
+
+    <app-user-enrollment-califications [idEnrollment]="enrollment.id!"></app-user-enrollment-califications>
+    <hr>
+  </div>
+</div>
+<ng-template #loading>Cargando matriculas...</ng-template>

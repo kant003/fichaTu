@@ -1,0 +1,57 @@
+
+<div *ngIf="califications$ | async; let califications; else loading">
+  <div *ngIf="califications.length !== 0">
+    <span *ngFor="let calification of califications">
+      <mat-form-field appearance="legacy">
+        <mat-label>{{calification.name}}</mat-label>
+        <input matInput placeholder="Placeholder" [value]="calification.value" (change)="onChangeValue($event, calification.id)">
+      </mat-form-field>
+      &nbsp;
+    </span>
+
+  </div>
+  <div *ngIf="califications!.length === 0">Por ahora no tienes calificaciones</div>
+</div>
+<ng-template #loading>Cargando calificaciones...</ng-template>
+
+<!--
+
+<div *ngIf="califications$ | async; let califications; else loading">
+  <div *ngIf="califications.length !== 0">Calificaciones:
+
+    <ul>
+      <li *ngFor="let calification of califications">
+        {{calification.name}} ;
+        {{calification.trimester}} ;
+        {{calification.value}} ;
+        {{calification.createdAt?.toDate() | date: 'full'}} ;
+        {{calification.comment}}
+        <button (click)="remove(idEnrollment, calification.id)">Eliminar</button>
+      </li>
+    </ul>
+  </div>
+
+  <mat-card class="position-center">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="legacy">
+        <mat-label>Nombre:</mat-label>
+        <input matInput formControlName="name">
+        <mat-hint>Especifica un nombre de la nota</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="legacy">
+        <mat-label>Valor:</mat-label>
+        <input matInput formControlName="value">
+        <mat-hint>Especifica un valor de la nota</mat-hint>
+      </mat-form-field>
+
+      <input mat-button color="accent" type="submit" value="enviar" [disabled]="form.invalid">
+    </form>
+  </mat-card>
+
+  <div *ngIf="califications!.length === 0">Por ahora no tienes calificaciones</div>
+</div>
+<ng-template #loading>Cargando calificaciones...</ng-template>
+
+-->

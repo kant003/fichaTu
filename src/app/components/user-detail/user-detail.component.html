@@ -4,7 +4,7 @@
 
     <mat-card class="example-card">
       <mat-card-header>
-        <img mat-card-avatar class="example-header-image" alt="avatar" width="100" [src]="user?.photoURL" />
+        <img mat-card-avatar class="avatar" alt="avatar" width="100" [src]="user?.photoURL" />
         <mat-card-title>{{ user?.displayName }}</mat-card-title>
         <mat-card-subtitle>{{user?.email}}</mat-card-subtitle>
       </mat-card-header>
@@ -18,14 +18,15 @@
         <div>Grupo: {{ user?.group===0?'A':'B' }} </div>
         <div> Hoy es el día {{ getDayOfYear() }} del año, día {{getParityOfDayYear()}}</div>
         <div> {{user?.group === calcGroupToSing()?'Hoy deberías quedarte en casa':'Hoy deberías asistir al centro'}} </div>
-        <a mat-button [routerLink]="['/user',user.uid,'sings']" *ngIf="false">Ver todos los fichajes</a>
+        <a mat-button [routerLink]="['/user',user.uid,'sings']" *ngIf="true">Ver mis fichajes</a>
 
       </mat-card-content>
       <mat-card-actions>
         <app-user-enrollments-list [idUser]="user.uid"></app-user-enrollments-list>
       </mat-card-actions>
     </mat-card>
-<button>pulsame</button>
+
+
 
   </span>
   <ng-template #loadingUser>

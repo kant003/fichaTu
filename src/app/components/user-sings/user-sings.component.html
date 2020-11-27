@@ -1,0 +1,70 @@
+
+<div *ngFor="let s of sings2$ | async">
+  user {{s.refUser.id}} <br/>
+  subject {{s.refSubject.id}} <br/>
+  schudele {{s.refSchedule.id}} <br/>
+  enroll {{s.refEnrollment.id}} <br/>
+  ip {{s.ip}} <br/>
+  day {{s.dayOfWeek}} <br/>
+  start {{s.startTime?.toDate() | date: 'HH:mm'}} <br/>
+  finish {{s.finishTime?.toDate() | date: 'HH:mm'}} <br/>
+  {{s.createdAt.toDate() | date: 'HH:mm dd/MM/yyy'}}
+  <hr>
+</div>
+
+<h1>Fichajes de un alumno {{idUser}} en un día X {{date | date: 'full' }}</h1>
+
+
+<table class="tabla">
+  <tr>
+    <th>Hora</th>
+    <th>Asignatura</th>
+    <th>Ficha</th>
+  </tr>
+  <tr *ngFor="let scheduleInfo of schedulesList">
+    <td>{{scheduleInfo.startTime.toDate() | date: "HH:mm"}} - {{scheduleInfo.finishTime.toDate() | date: "HH:mm"}}</td>
+    <td>{{scheduleInfo.name}}</td>
+    <td>
+      <div *ngIf="getSingsEmparejados(scheduleInfo.startTime.toDate(), scheduleInfo.finishTime.toDate(), scheduleInfo.idSubject).retorno; let singsInfo; else loading">
+        <div *ngFor="let singInfo of singsInfo">
+          <mat-icon [style.color]="'green'">thumb_up</mat-icon>
+          {{singInfo.createdAt.toDate() | date: 'HH:mm'}}
+        </div>
+        <div *ngIf="singsInfo.length===0">
+          <mat-icon [style.color]="'red'">thumb_down</mat-icon>
+
+          <button mat-button (click)="openDialog(scheduleInfo.idEnrollment, scheduleInfo.startTime.toDate())">
+            Justificar
+          </button>
+        </div>
+      </div>
+
+      <ng-template #loading>Cargando...</ng-template>
+
+    </td>
+  </tr>
+</table>
+
+
+<h1>Fichajes efectuados fuera de hora</h1>
+<table class="tabla">
+  <tr>
+    <th>Asignatura</th>
+    <th>Ficha</th>
+  </tr>
+  <tr *ngFor="let scheduleInfo of schedulesList">
+    <td>{{scheduleInfo.name}}</td>
+    <td>
+      <div *ngIf="getSingsEmparejados(scheduleInfo.startTime.toDate(), scheduleInfo.finishTime.toDate(), scheduleInfo.idSubject).noPair; let singsInfo; else loading">
+        <div *ngFor="let singInfo of singsInfo">
+          <mat-icon [style.color]="'red'">thumb_down</mat-icon>
+          {{singInfo.createdAt.toDate() | date: 'HH:mm'}}
+        </div>
+
+      </div>
+
+      <ng-template #loading>Cargando...</ng-template>
+
+    </td>
+  </tr>
+</table>

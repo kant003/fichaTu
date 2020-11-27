@@ -1,0 +1,18 @@
+<h1>Calificaciones del usuario xxx de la asignatura xxx</h1>
+<div *ngIf="califications$ | async; let califications; else loading">
+  <div *ngIf="califications.length !== 0">
+
+    <ul>
+      <li *ngFor="let calification of califications">
+        {{calification.name}}
+        Nota:<span *ngIf="!calification.value">(Aun no calificado)</span>
+        <span [style.color]="getColor(calification.value)">{{calification.value}}</span>
+        {{calification.createdAt.toDate() | date: 'full'}}
+        {{calification.comment | date: 'full'}}
+
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="califications!.length === 0">Por ahora no tienes calificaciones</div>
+</div>
+<ng-template #loading>Cargando calificaciones...</ng-template>

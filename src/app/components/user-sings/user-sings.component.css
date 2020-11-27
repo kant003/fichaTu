@@ -1,0 +1,13 @@
+.tabla,th,td{
+  border-collapse: collapse;
+ /* width: 100%;*/
+  border: 1px solid black;
+}
+
+th,td{
+  border: 1px solid black;
+
+}
+td{
+  width: 33%;
+}

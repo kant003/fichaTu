@@ -1,8 +1,11 @@
-import { firestore } from 'firebase';
+import { Observable } from 'rxjs';
 
 export interface Subject {
   id?: string;
   name: string;
   active?: boolean;
-  createdAt?: firestore.Timestamp;
+  deadLine?: firebase.default.firestore.Timestamp;
+  createdAt?: firebase.default.firestore.Timestamp;
+  // countDown?:any;
+  act$?: Observable<number>;
 }

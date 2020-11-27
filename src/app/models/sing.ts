@@ -1,8 +1,7 @@
-import { firestore } from 'firebase';
 
 export interface Sing {
   id?: string;
-  createdAt: firestore.Timestamp;
+  createdAt: firebase.default.firestore.Timestamp;
   ip: string;
 }
 

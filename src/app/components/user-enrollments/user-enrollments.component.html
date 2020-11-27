@@ -1,0 +1,30 @@
+<div *ngIf="enrollements$ | async; let enrollments; else loading">
+  <div *ngIf="enrollments.length !== 0">Está matriculado en las siguientes asignaturas:</div>
+
+  <ul>
+    <li *ngFor="let enrollment of enrollments">
+      <span *ngIf="(enrollment.subject | async) as subject; else loadingSubject">
+        {{ subject.name}}
+
+        <button class="btn third" *ngIf="canSing((subject.act$ | async))" mat-raised-button [disabled]="!canSing((subject.act$ | async))"    #submitButton (click)="sing(submitButton, enrollment.id)">
+          Fichar  <span [style.color]="getColor(subject.act$ | async)">{{subject.act$ | async}} sec.</span> <mat-icon>fingerprint dialog</mat-icon>
+        </button>
+
+        <button class="btn btn-disabled third-disabled" *ngIf="!canSing((subject.act$ | async))" mat-raised-button [disabled]="!canSing((subject.act$ | async))"    #submitButton (click)="sing(submitButton, enrollment.id)">
+          profe no deja fichar <mat-icon>hourglass_empty</mat-icon>
+        </button>
+
+        <button class="btn" mat-raised-button #submitButton (click)="sing2(submitButton, enrollment.id, enrollment.refSubject.id)">Firmaaa</button>
+
+        <a mat-button [routerLink]="['/user',idUser,'enrollment',enrollment.id,'sings']">Ver fichajes</a>
+        <a mat-button [routerLink]="['/user',idUser,'enrollment',enrollment.id,'justifications']">Gestionar justificantes</a>
+        <a mat-button [routerLink]="['/enrollment',enrollment.id,'califications']" *ngIf="true">Ver mis calificaciones</a>
+
+      </span>
+      <ng-template #loadingSubject>Cargando matricula...</ng-template>
+
+    </li>
+  </ul>
+  <div *ngIf="enrollments!.length === 0">Por ahora no te has matriculado de nada</div>
+</div>
+<ng-template #loading>Cargando matriculas...</ng-template>

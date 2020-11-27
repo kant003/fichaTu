@@ -53,6 +53,19 @@ export class SubjectService extends Paginated<Subject> {
     );
   }
 
+  getSubjects(): Observable<Subject[]> {
+
+
+    return this.afs.collection<Subject>('subjects').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Subject;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+
+
+  }
   //
   getSubjectsPaginatedFilterName(): Observable<Subject[]> {
     return combineLatest([this.nameFilter$, this.paginateFilter$, this.pageSize$]).pipe(
@@ -129,32 +142,8 @@ export class SubjectService extends Paginated<Subject> {
     return this.afs.collection<Subject>('subjects').doc(subjectId).delete();
   }
 
-  async updateSubject(subjectId: string, data: Partial<unknown>): Promise<void> {
-
-    /* const batch = this.afs.firestore.batch;
-
-     this.afs.collection<Enrollment>('enrollments', ref => ref.where('refSubject', '==', subjectId))
-       .valueChanges().forEach(e=>e.)
-
-
-       .subscribe(enrollments=>{
-         enrollments.forEach(enrollment =>{
-           batch.delete(enrollment);
-
-         })
-       })
-
-     for (const doc of documents) {
-       await clearFirestoreData(await doc.listCollections());
-       batch.delete(doc);
-     }
-     await batch.commit();
-
-
-       */
-    return this.afs.collection<Subject>('subjects').doc(subjectId).update(data);
-    // TODO borrar tambien todos los enrollments asociados en una transacción
-
+  updateSubject(subjectId: string, data: Partial<Subject>): Promise<void> {
+    return this.afs.collection<Subject>('subjects').doc<Subject>(subjectId).update(data);
   }
 
   getSchedulesByIdSubject(idSubject: string): Observable<Schedule[]> {

@@ -1,30 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { SubjectsComponent } from './components/subjects/subjects.component';
+import { SubjectListComponent } from './components/subject-list/subject-list.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { UserEnrollmentSingComponent } from './components/user-enrollment-sing/user-enrollment-sing.component';
+import { EnrollmentSingsComponent } from './components/enrollment-sings/enrollment-sings.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserEnrollmentsEditComponent } from './components/user-enrollments-edit/user-enrollments-edit.component';
-import { EnrollmentsOrderComponent } from './components/enrollments-order/enrollments-order.component';
-import { SubjectScheduleComponent } from './components/subject-schedule/subject-schedule.component';
-import { EnrollmentsSingsComponent } from './components/enrollments-sings/enrollments-sings.component';
+import { SubjectOrderComponent } from './components/subject-order/subject-order.component';
+import { SubjectSchedulesComponent } from './components/subject-schedules/subject-schedules.component';
+import { SubjectSingsComponent } from './components/subject-sings/subject-sings.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { AcercadeComponent } from './components/acercade/acercade.component';
 import { PruebaComponent } from './components/prueba/prueba.component';
 import { SecurityTestComponent } from './components/security-test/security-test.component';
 import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectLoggedInTo, canActivate } from '@angular/fire/auth-guard';
-import { SingsComponent } from './components/sings/sings.component';
+import { UserSingsComponent } from './components/user-sings/user-sings.component';
 import { pipe, Observable, UnaryFunction } from 'rxjs';
 import { customClaims } from '@angular/fire/auth-guard';
 import { map } from 'rxjs/operators';
 import { User } from './models/user';
 import { FirebaseApp } from '@angular/fire';
 import { OperatorFunction } from 'rxjs/internal/types';
-import { JustificationsComponent } from './components/justifications/justifications.component';
+// import { JustificationsComponent } from './components/justifications/justifications.component';
 import { UserJustificationsService } from './services/user-justifications.service';
-import { UserEnrollmentJustificationsComponent } from './components/user-enrollment-justifications/user-enrollment-justifications.component';
+import { EnrollmentJustificationsComponent } from './components/enrollment-justifications/enrollment-justifications.component';
+import { EnrollmentCalificationsComponent } from './components/enrollment-califications/enrollment-califications.component';
+import { SubjectCalificationsComponent } from './components/subject-califications/subject-califications.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const teacherOnly = () => pipe(
@@ -42,7 +44,7 @@ const editorOnly = (): any => pipe(customClaims,
 
 
 const redirectToProfileEditOrLogin = () =>
-  map((user: firebase.User | null) => {
+  map((user: firebase.default.User | null) => {
     if (!user?.isAnonymous) { return ['users']; }
     else { return ['login']; }
   });
@@ -53,20 +55,23 @@ const routes: Routes = [
   // {path: 'prueba', component: PruebaComponent },
   { path: 'users', component: UserListComponent },
   { path: 'user/:id', component: UserDetailComponent },
-  { path: 'user/:id/sings', component: SingsComponent },
+  { path: 'user/:id/sings', component: UserSingsComponent },
   { path: 'user/:id/enrollments-edit', component: UserEnrollmentsEditComponent },
-  { path: 'user/:id/enrollment/:idEnrollment/sings', component: UserEnrollmentSingComponent },
-  { path: 'user/:idUser/enrollment/:idEnrollment/justifications', component: UserEnrollmentJustificationsComponent },
+  { path: 'user/:id/enrollment/:idEnrollment/sings', component: EnrollmentSingsComponent },
 
-  { path: 'subjects', component: SubjectsComponent },
+  { path: 'user/:idUser/enrollment/:idEnrollment/justifications', component: EnrollmentJustificationsComponent },
 
-  { path: 'subject/:id/order', component: EnrollmentsOrderComponent },
-  { path: 'subject/:id/schedules', component: SubjectScheduleComponent },
-  { path: 'subject/:id/sings', component: EnrollmentsSingsComponent },
+  { path: 'subjects', component: SubjectListComponent },
+
+  { path: 'subject/:id/order', component: SubjectOrderComponent },
+  { path: 'subject/:id/schedules', component: SubjectSchedulesComponent },
+  { path: 'subject/:id/sings', component: SubjectSingsComponent },
+  { path: 'subject/:id/califications', component: SubjectCalificationsComponent },
   { path: 'configuration', component: ConfigurationComponent },
 
-  { path: 'subject/:id/enrollments', component: EnrollmentsOrderComponent },
-  { path: 'enrollment/:idEnrollment/justifications', component: JustificationsComponent },
+  { path: 'subject/:id/enrollments', component: SubjectOrderComponent },
+  /// { path: 'enrollment/:idEnrollment/justifications', component: JustificationsComponent },
+  { path: 'enrollment/:idEnrollment/califications', component: EnrollmentCalificationsComponent },
   { path: 'user/:id/enrollment/:idEnrollment/justifications', component: UserJustificationsService },
 
 

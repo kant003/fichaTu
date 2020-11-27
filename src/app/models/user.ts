@@ -1,4 +1,3 @@
-import { firestore } from 'firebase';
 
 export interface User {
   uid: string;
@@ -12,6 +11,6 @@ export interface User {
   isActive?: boolean;
   // idHuella?: number;
   group?: number;
-  updatedAt: firestore.Timestamp;
-  createdAt: firestore.Timestamp;
+  updatedAt: firebase.default.firestore.Timestamp;
+  createdAt: firebase.default.firestore.Timestamp;
 }

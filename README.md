@@ -1,27 +1,33 @@
-# FichajeRapidoCebem
+FichaTu
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+- acercade: info de la app
+- configuration: cambia la conf del sistema
+- login: login y logout
+- menu:
+- page-not-found
+- prueba
+- security-test
 
-## Development server
+- user-detail:{P:id} datos basicos y fichaje de un usuario dado
+  - user-enrollments:{I:uid} lista de matriculas de un usuario
+    - enrollment-califications:{P:idEnrollment}  calificaciones de una matricula determinada
+    - enrollment-sings:{P:idEnrollment} fichajes en un rango de fecha de una matricula determinada
+    - enrollment-justifications: {P:idEnrollment}lista justificaciones de una matricula
+      - enrollment-justifications-add-dialog: {IY:date,idEnrollment} dialogo para añadir justificacion a asignatura
+      - enrollment-justification-show-file: {IY:idJustification,idEnrollment}  ver el documento(foto) asociado a la justificacion
+  - user-sings:{P:idUser} los fichajes de un alumno dado (en todas sus matriculas)
+  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- user-list: listado de todos los alumnos
+  - user-enrollment-select-dialog:{IY: idAlumno} dialog para seleccionar la matricula del alumno
+  - user-enrollments-edit:{P:idAlumno} gestionar las matriculas de un alumno
 
-## Code scaffolding
+- subject-list: listado de asignaturas
+  - subject-add-dialog: dialog add nueva asignatura
+  - subject-sings:{P:idSubject} fichaje actuales de los alumnos en una asignatura
+  - subject-order:{P:idSubject} orden de asignaturas
+  - subject-califications:{P:idSubject} calificar a todos los alumnos en una asignatura 
+    - user-enrollment-califications:{I:idEnrollment} Obtener los datos de una calificacion  
+  - subject-schedules:{P:idSubject} horarios de la asignatura
+    - subject-schedule-add-dialog:{IY:idSubject} add nuevo horario
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

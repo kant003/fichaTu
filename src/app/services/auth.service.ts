@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';        // for authentication
-import { User } from 'src/app/models/user';
-import { Observable } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
@@ -25,23 +22,23 @@ export class AuthService {
   }*/
 
   // user?: firebase.User;
-  user$: Observable<firebase.User | null>;
+  user$: Observable<firebase.default.User | null>;
 
   constructor(private afAuth: AngularFireAuth) {
-    //afAuth.user
-    //afAuth.currentUser
+    // afAuth.user
+    // afAuth.currentUser
     // afAuth.authState.subscribe(user => this.user = user);
     /*this.afAuth.auth..subscribe((auth) => {
       this.authState = auth;
     });*/
    // afAuth.use
-    //afAuth.authState.subscribe( user => this.user = user as firebase.User);
+    // afAuth.authState.subscribe( user => this.user = user as firebase.User);
     this.user$ = afAuth.user;
   }
 
 
-  googleLogin(): Promise<firebase.auth.UserCredential> {
-      const provider = new firebase.auth.GoogleAuthProvider();
+  googleLogin(): Promise<firebase.default.auth.UserCredential> {
+      const provider = new firebase.default.auth.GoogleAuthProvider();
       return this.afAuth.signInWithPopup(provider);
   }
 
@@ -68,11 +65,15 @@ export class AuthService {
     return this.user.uid;
   }*/
 
-  get currentUserObservable(): Promise<firebase.User> {
-    return this.afAuth.currentUser as Promise<firebase.User>;
+  get currentUserObservable(): Promise<firebase.default.User> {
+    return this.afAuth.currentUser as Promise<firebase.default.User>;
   }
-  get timestamp() {
-    return firebase.firestore.FieldValue.serverTimestamp();
+  /*get timestamp() {
+    return firebase.default.firestore.FieldValue.serverTimestamp();
+  }*/
+
+  get timestamp(): firebase.default.firestore.Timestamp {
+    return firebase.default.firestore.FieldValue.serverTimestamp() as firebase.default.firestore.Timestamp;
   }
 
 }

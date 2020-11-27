@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Documento</h1>
+<div mat-dialog-content>
+  <div *ngIf="profileUrl$ | async; let url; else loading">
+    <img [src]="url" />
+  </div>
+  <ng-template #loading>Cargando documento...</ng-template>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cerrar</button>
+</div>

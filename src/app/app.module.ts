@@ -59,28 +59,30 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { SubjectsComponent } from './components/subjects/subjects.component';
+import { SubjectListComponent } from './components/subject-list/subject-list.component';
 import { SubjectAddDialogComponent } from './components/subject-add-dialog/subject-add-dialog.component';
-import { UserEnrollmentListDialogComponent } from './components/user-enrollment-list-dialog/user-enrollment-list-dialog.component';
-import { UserEnrollmentsListComponent } from './components/user-enrollments-list/user-enrollments-list.component';
-import { UserEnrollmentSingComponent } from './components/user-enrollment-sing/user-enrollment-sing.component';
+import { UserEnrollmentSelectDialogComponent } from './components/user-enrollment-select-dialog/user-enrollment-select-dialog.component';
+import { UserEnrollmentsComponent } from './components/user-enrollments/user-enrollments.component';
+import { EnrollmentSingsComponent } from './components/enrollment-sings/enrollment-sings.component';
 import { UserEnrollmentsEditComponent } from './components/user-enrollments-edit/user-enrollments-edit.component';
-import { EnrollmentsOrderComponent } from './components/enrollments-order/enrollments-order.component';
+import { SubjectOrderComponent } from './components/subject-order/subject-order.component';
 import { SubjectScheduleAddDialogComponent } from './components/subject-schedule-add-dialog/subject-schedule-add-dialog.component';
-import { SubjectScheduleComponent } from './components/subject-schedule/subject-schedule.component';
-import { EnrollmentsSingsComponent } from './components/enrollments-sings/enrollments-sings.component';
+import { SubjectSchedulesComponent } from './components/subject-schedules/subject-schedules.component';
+import { SubjectSingsComponent } from './components/subject-sings/subject-sings.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { AcercadeComponent } from './components/acercade/acercade.component';
 import { GroupPipePipe } from './pipes/group-pipe.pipe';
 import { PruebaComponent } from './components/prueba/prueba.component';
 import { SecurityTestComponent } from './components/security-test/security-test.component';
-import { SingsComponent } from './components/sings/sings.component';
-import { JustificationsComponent } from './components/justifications/justifications.component';
-import { JustificationAddDialogComponent } from './components/justification-add-dialog/justification-add-dialog.component';
-import { SubjectEnrollmentsComponent } from './components/subject-enrollments/subject-enrollments.component';
-import { UserEnrollmentJustificationsComponent } from './components/user-enrollment-justifications/user-enrollment-justifications.component';
-import { UserEnrollmentJustificationsAddDialogComponent } from './components/user-enrollment-justifications-add-dialog/user-enrollment-justifications-add-dialog.component';
-import { JustificationFileDialogComponent } from './components/justification-file-dialog/justification-file-dialog.component';
+import { UserSingsComponent } from './components/user-sings/user-sings.component';
+//import { JustificationsComponent } from './components/justifications/justifications.component';
+//import { JustificationAddDialogComponent } from './components/justification-add-dialog/justification-add-dialog.component';
+import { EnrollmentJustificationsComponent } from './components/enrollment-justifications/enrollment-justifications.component';
+import { EnrollmentJustificationsAddDialogComponent } from './components/enrollment-justifications-add-dialog/enrollment-justifications-add-dialog.component';
+import { EnrollmentJustificationShowFileComponent } from './components/enrollment-justification-show-file/enrollment-justification-show-file.component';
+import { EnrollmentCalificationsComponent } from './components/enrollment-califications/enrollment-califications.component';
+import { SubjectCalificationsComponent } from './components/subject-califications/subject-califications.component';
+import { UserEnrollmentCalificationsComponent } from './components/user-enrollment-califications/user-enrollment-califications.component';
 
 @NgModule({
   declarations: [
@@ -92,16 +94,16 @@ import { JustificationFileDialogComponent } from './components/justification-fil
     BooleanoPipePipe,
     GroupPipePipe,
     UserListComponent,
-    SubjectsComponent,
+    SubjectListComponent,
     SubjectAddDialogComponent,
     UserEnrollmentsEditComponent,
-    UserEnrollmentSingComponent,
-    UserEnrollmentsListComponent,
-    UserEnrollmentListDialogComponent,
-    EnrollmentsOrderComponent,
-    SubjectScheduleComponent,
+    EnrollmentSingsComponent,
+    UserEnrollmentsComponent,
+    UserEnrollmentSelectDialogComponent,
+    SubjectOrderComponent,
+    SubjectSchedulesComponent,
     SubjectScheduleAddDialogComponent,
-    EnrollmentsSingsComponent,
+    SubjectSingsComponent,
     AcercadeComponent,
     ConfigurationComponent,
     /*
@@ -113,13 +115,15 @@ import { JustificationFileDialogComponent } from './components/justification-fil
     ConfigurationComponent,
     PruebaComponent,
     SecurityTestComponent,
-    SingsComponent,
-    JustificationsComponent,
-    JustificationAddDialogComponent,
-    SubjectEnrollmentsComponent,
-    UserEnrollmentJustificationsComponent,
-    UserEnrollmentJustificationsAddDialogComponent,
-    JustificationFileDialogComponent,
+    UserSingsComponent,
+    //JustificationsComponent,
+    //JustificationAddDialogComponent,
+    EnrollmentJustificationsComponent,
+    EnrollmentJustificationsAddDialogComponent,
+    EnrollmentJustificationShowFileComponent,
+    EnrollmentCalificationsComponent,
+    SubjectCalificationsComponent,
+    UserEnrollmentCalificationsComponent,
   ],
   imports: [
     BrowserModule,

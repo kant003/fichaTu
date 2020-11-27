@@ -1,7 +1,6 @@
 import { Subject } from './subject';
 import { User } from 'src/app/models/user';
 import { DocumentReference } from '@angular/fire/firestore';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Sing } from './sing';
 
